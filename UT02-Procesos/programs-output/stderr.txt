@@ -1,0 +1,1 @@
+Escribiendo en el stream de errores estándar para comprobar que funciona sin tener que matar el proceso

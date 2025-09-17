@@ -1,0 +1,10 @@
+En iteración 1. Duermo 500 milisegundos.
+En iteración 2. Duermo 500 milisegundos.
+En iteración 3. Duermo 500 milisegundos.
+En iteración 4. Duermo 500 milisegundos.
+En iteración 5. Duermo 500 milisegundos.
+En iteración 6. Duermo 500 milisegundos.
+En iteración 7. Duermo 500 milisegundos.
+En iteración 8. Duermo 500 milisegundos.
+En iteración 9. Duermo 500 milisegundos.
+En iteración 10. Duermo 500 milisegundos.
