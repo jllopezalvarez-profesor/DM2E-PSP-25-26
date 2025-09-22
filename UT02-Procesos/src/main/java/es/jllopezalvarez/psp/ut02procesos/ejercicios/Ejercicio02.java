@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Ejercicio02 {
     public static void main(String[] args) {
-        ProcessBuilder processBuilder = new ProcessBuilder("ping", "-c", "5", "google.com");
+        ProcessBuilder processBuilder = new ProcessBuilder("ping", isWindows() ? "-n" : "-c", "40", "google.com");
 
         try {
             Process pingProcess = processBuilder.start();
@@ -37,5 +37,9 @@ public class Ejercicio02 {
             throw new RuntimeException("Error, interrumpido", e);
         }
 
+    }
+
+    private static boolean isWindows() {
+        return System.getProperty("os.name").toLowerCase().contains("windows");
     }
 }

@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Ejercicio01 {
     public static void main(String[] args) {
-        ProcessBuilder processBuilder = new ProcessBuilder("ping", "-c", "5", "google.com");
+        ProcessBuilder processBuilder = new ProcessBuilder("ping", isWindows() ? "-n" : "-c", "40", "google.com");
 
         try {
             Process pingProcess = processBuilder.start();
@@ -30,14 +30,13 @@ public class Ejercicio01 {
                 waitCount++;
                 System.out.printf("%s - %s - He esperado %d veces\n",
                         LocalTime.now(),
-                        finished?"El proceso ya ha terminado":"Aún no ha terminado",
+                        finished ? "El proceso ya ha terminado" : "Aún no ha terminado",
                         waitCount);
             }
 
-            int result =  pingProcess.exitValue();
+            int result = pingProcess.exitValue();
 
             System.out.printf("Terminado con código %d\n", result);
-
 
 
         } catch (IOException e) {
@@ -46,5 +45,9 @@ public class Ejercicio01 {
             throw new RuntimeException("Error, interrumpido", e);
         }
 
+    }
+
+    private static boolean isWindows() {
+        return System.getProperty("os.name").toLowerCase().contains("windows");
     }
 }
