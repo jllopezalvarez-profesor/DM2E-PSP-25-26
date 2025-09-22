@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
-public class Ejercicio01 {
+public class Ejercicio02 {
     public static void main(String[] args) {
         ProcessBuilder processBuilder = new ProcessBuilder("ping", "-c", "5", "google.com");
 
@@ -14,25 +14,16 @@ public class Ejercicio01 {
 
             int waitCount = 0;
 
-//            while (pingProcess.isAlive()) {
-//                boolean finished = pingProcess.waitFor(500, TimeUnit.MILLISECONDS);
-//                waitCount++;
-//                System.out.printf("%s - %s - He esperado %d veces\n",
-//                        LocalTime.now(),
-//                        finished?"El proceso ya ha terminado":"Aún no ha terminado",
-//                        waitCount);
-//            }
-
-            boolean finished = false;
-
-            while (!finished) {
-                finished = pingProcess.waitFor(500, TimeUnit.MILLISECONDS);
+            while (pingProcess.isAlive()) {
+                Thread.sleep(500);
                 waitCount++;
                 System.out.printf("%s - %s - He esperado %d veces\n",
                         LocalTime.now(),
-                        finished?"El proceso ya ha terminado":"Aún no ha terminado",
+                        pingProcess.isAlive()?"Aún no ha terminado":"El proceso ya ha terminado",
                         waitCount);
             }
+
+
 
             int result =  pingProcess.exitValue();
 
