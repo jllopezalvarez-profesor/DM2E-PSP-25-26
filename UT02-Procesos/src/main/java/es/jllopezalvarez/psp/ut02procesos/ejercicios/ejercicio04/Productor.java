@@ -7,21 +7,20 @@ import java.time.LocalTime;
 
 public class Productor {
 
-    private static final Path SHARED_FILE = Path.of("programs-output", "mensajes.txt");
-    private static final int LINES_COUNT = 20;
-    private static final long SLEEP_TIME_MILISECONDS = 1000;
+
 
     public static void main(String[] args) {
-        for(int lineNumber = 1; lineNumber <= LINES_COUNT; lineNumber++) {
-            try(FileWriter fw = new FileWriter(SHARED_FILE.toFile(), true)){
+        for(int lineNumber = 1; lineNumber <= Constants.LINES_COUNT; lineNumber++) {
+            try(FileWriter fw = new FileWriter(Constants.SHARED_FILE.toFile(), true)){
                 fw.write(LocalTime.now().toString());
                 fw.flush();
-                Thread.sleep(SLEEP_TIME_MILISECONDS);
+                Thread.sleep(Constants.SLEEP_TIME_MILISECONDS);
                 fw.write(String.format(" - Iteración nº %s\n", lineNumber));
-                if (lineNumber == LINES_COUNT) {
+                if (lineNumber == Constants.LINES_COUNT) {
                     fw.write("FIN\n");
                 }
-                // fw.flush(); // No es necesario, porque se cierra el fichero, y al cerrar se hace flush
+                fw.flush(); // No es necesario, porque se cierra el fichero, y al cerrar se hace flush
+                Thread.sleep(Constants.SLEEP_TIME_MILISECONDS);
             } catch (IOException e) {
                 throw new RuntimeException("Error de E/S al manejar el fichero", e);
             } catch (InterruptedException e) {
