@@ -1,17 +1,22 @@
 package es.jllopezalvarez.psp.ut02procesos.ejercicios.ejercicio04;
 
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.channels.Channel;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.nio.file.Path;
 import java.time.LocalTime;
 
 public class Productor {
 
 
-
     public static void main(String[] args) {
-        for(int lineNumber = 1; lineNumber <= Constants.LINES_COUNT; lineNumber++) {
-            try(FileWriter fw = new FileWriter(Constants.SHARED_FILE.toFile(), true)){
+        for (int lineNumber = 1; lineNumber <= Constants.LINES_COUNT; lineNumber++) {
+            try (FileOutputStream lockFos = new FileOutputStream(Constants.LOCK_FILE.toFile());
+                 FileChannel lockChannel = lockFos.getChannel(); FileLock lock = lockChannel.lock();
+                 FileWriter fw = new FileWriter(Constants.SHARED_FILE.toFile(), true)) {
                 fw.write(LocalTime.now().toString());
                 fw.flush();
                 Thread.sleep(Constants.SLEEP_TIME_MILISECONDS);
@@ -29,3 +34,4 @@ public class Productor {
         }
     }
 }
+

@@ -1,10 +1,11 @@
 package es.jllopezalvarez.psp.ut02procesos.ejercicios.ejercicio04;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.NoSuchElementException;
 
 public class Consumidor {
 
@@ -12,8 +13,20 @@ public class Consumidor {
 
         boolean finished = false;
 
+        String lastLine;
         while (!finished) {
-            String lastLine = readLastLine(Constants.SHARED_FILE) ;
+            try (FileOutputStream lockFos = new FileOutputStream(Constants.LOCK_FILE.toFile());
+                 FileChannel lockChannel = lockFos.getChannel();
+                 FileLock lock = lockChannel.lock()
+            ) {
+
+//            String lastLine = readLastLine(Constants.SHARED_FILE) ;
+                lastLine = readLastLineWithNIO(Constants.SHARED_FILE);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException("Error de acceso a fichero de bloqueo", e);
+            } catch (IOException e) {
+                throw new RuntimeException("Error de E/S al bloquear", e);
+            }
             if (lastLine.equals("FIN")) {
                 System.out.println("Se ha encontrado 'FIN' en el fichero");
                 finished = true;
@@ -23,12 +36,11 @@ public class Consumidor {
         }
 
 
-
     }
 
     private static String readLastLine(Path sharedFile) {
         String line = "";
-        try(BufferedReader br = new BufferedReader(new FileReader(Constants.SHARED_FILE.toFile()))){
+        try (BufferedReader br = new BufferedReader(new FileReader(Constants.SHARED_FILE.toFile()))) {
             String lastLine = br.readLine();
             while (lastLine != null) {
                 line = lastLine;
@@ -41,4 +53,19 @@ public class Consumidor {
         }
         return line;
     }
+
+    private static String readLastLineWithNIO(Path sharedFile) {
+        try {
+            return Files.readAllLines(sharedFile).getLast();
+        } catch (NoSuchElementException e) {
+            return "";
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("No existe el fichero o no tenemos acceso", e);
+        } catch (IOException e) {
+            throw new RuntimeException("Error de E/S al acceder al fichero", e);
+        }
+
+
+    }
+
 }
