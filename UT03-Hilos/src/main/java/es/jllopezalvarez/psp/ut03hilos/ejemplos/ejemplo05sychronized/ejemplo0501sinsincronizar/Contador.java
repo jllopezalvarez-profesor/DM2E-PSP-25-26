@@ -1,4 +1,4 @@
-package es.jllopezalvarez.psp.ut03hilos.ejemplos.ejemplo05sychronized.ejemplo0501;
+package es.jllopezalvarez.psp.ut03hilos.ejemplos.ejemplo05sychronized.ejemplo0501sinsincronizar;
 
 public class Contador {
     private int contador = 0;
@@ -7,7 +7,7 @@ public class Contador {
         return contador;
     }
 
-    public void incrementar(){
+    public void incrementar() {
         contador++;
     }
 }
