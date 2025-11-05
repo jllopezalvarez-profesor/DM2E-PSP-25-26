@@ -25,3 +25,10 @@ Este paquete es básicamente igual que el ejemplo 0503, pero en lugar de sincron
 la sentencia problemática, la que incrementa el contador. En este ejemplo simple no hay realmente diferencias, porque
 los métodos solo tienen una sentencia. Pero en el caso de métodos más complejos, la idea es siempre sincronizar lo
 mínimo posible. Cuanto menos código sincronizado haya en el programa, más paralelismo podrá alcanzar.
+
+## Paquete [ejemplo0506atomic](ejemplo0506atomic)
+
+Este paquete parte del ejemplo inicial (el 0501) y utiliza la clase "AtomicInteger" para eliminar el problema de acceso
+concurrente. Esta clase encapsula un entero marcado como "volatile" y evita condiciones de carrera porque garantiza que
+sus operaciones son atómicas, no se hacen en varios pasos. Estas clases "Atomic..." consiguen esto usando operaciones
+atómicas a nivel de hardware. Son operaciones como 
