@@ -16,6 +16,7 @@ public class Ejemplo0702NoTermina {
             // No lanza excepción ahora, pero...
             // como nadie hace object.notify, el programa no termina nunca
             object.wait();
+
         }
 
         System.out.println("Fin del programa...");

@@ -6,7 +6,7 @@ import java.util.Queue;
 public class NumberQueue {
     private final Queue<Integer> queue = new LinkedList<>();
 
-    public synchronized void add(Integer number) {
+    public synchronized void add(Integer number) {            synchronized (queue) {}
         this.queue.add(number);
     }
 

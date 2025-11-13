@@ -15,7 +15,7 @@ public class NumberQueue {
         // Podría usarse notifyAll, que despertaría a más de un hilo.
         // Si no hay otros hilos esperando, esta llamada no tiene consecuencias, no hace nada.
         System.out.printf("Cola: Se ha añadido un número. Hilo %s informa al resto.\n", Thread.currentThread().getName());
-        this.notify();
+        this.notifyAll();
 
     }
 
