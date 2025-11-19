@@ -17,7 +17,7 @@ public class Barra {
     public synchronized void colocarPlato(String plato) throws InterruptedException {
         // Si no hay espacio esperar
         // Tiene que ser while
-        if (this.cola.size() >= this.tamanioMaximo) {
+        while (this.cola.size() >= this.tamanioMaximo) {
             wait(); // this.wait();
         }
         this.cola.add(plato);
@@ -28,7 +28,7 @@ public class Barra {
     public synchronized String cogerPlato() throws InterruptedException {
         // Si no hay platos para servir el camarero esperará
         // Tiene que ser while
-        if (cola.isEmpty()){
+        while (cola.isEmpty()){
             wait();
         }
 
