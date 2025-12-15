@@ -14,20 +14,21 @@ public class Client {
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        try(Socket socket = new Socket("localhost", Server.SERVER_PORT);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true)){
+        try (Socket socket = new Socket("localhost", Server.SERVER_PORT);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true)) {
+
             System.out.print("Dime qué quieres saber, fecha (F) u hora (H): ");
-            String peticion =  sc.nextLine();
+            String peticion = sc.nextLine();
+            while (!peticion.equals("FIN")) {
 
-            writer.println(peticion);
+                writer.println(peticion);
 
-            String respuesta =  reader.readLine();
-
-            System.out.printf("El servidor ha dicho: %s\n", respuesta);
-
-
-
+                String respuesta = reader.readLine();
+                System.out.printf("El servidor ha dicho: %s\n", respuesta);
+                System.out.print("Dime qué quieres saber, fecha (F) u hora (H): ");
+                 peticion = sc.nextLine();
+            }
 
 
         } catch (UnknownHostException e) {

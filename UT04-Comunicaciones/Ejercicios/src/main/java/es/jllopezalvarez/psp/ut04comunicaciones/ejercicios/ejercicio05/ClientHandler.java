@@ -22,7 +22,7 @@ public class ClientHandler extends Thread {
             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true)){
 
             String peticionCliente = reader.readLine();
-            while(peticionCliente != null && isInterrupted()){
+            while(peticionCliente != null && !isInterrupted()){
                 String respuesta = switch (peticionCliente){
                     case "F" -> LocalDate.now().toString();
                     case "H" -> LocalTime.now().toString();
@@ -34,7 +34,5 @@ public class ClientHandler extends Thread {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        super.run();
     }
 }
