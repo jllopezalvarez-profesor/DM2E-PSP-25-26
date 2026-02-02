@@ -25,7 +25,12 @@ public class Ejemplo02B1BinarioSincrono {
 
             // Enviar petición al servidor. El hilo se bloquea hasta que termina la petición.
             // Se indica que el cuerpo de la respuesta debe guardarse en disco.
-            client.send(request, HttpResponse.BodyHandlers.ofFile(Path.of(FICHERO_DESTINO)));
+            HttpResponse<Path> response = client.send(request, HttpResponse.BodyHandlers.ofFile(Path.of(FICHERO_DESTINO)));
+
+            System.out.printf("La respuesta del servidor es un %d\n", response.statusCode());
+
+            System.out.println("Cabeceras recibidas:");
+            System.out.println(response.headers());
 
             System.out.println("Logo descargado correctamente");
 
