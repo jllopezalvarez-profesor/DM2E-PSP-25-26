@@ -35,6 +35,9 @@ public class Ejemplo02A2TextoAsincrono {
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                     .thenApply(HttpResponse::body)
                     .thenAccept(ip -> System.out.println("IP pública: " + ip))
+                    .thenRun(()-> {
+                        System.out.println("Ya se ha completado");
+                    })
                     .exceptionally(e -> {
                         System.err.println("Error al obtener la IP pública (exceptionally).");
                         e.printStackTrace();
@@ -45,7 +48,7 @@ public class Ejemplo02A2TextoAsincrono {
             System.out.println("Esto puede aparecer antes que el mensaje de la IP, dependiendo de la velocidad de red.");
 
             // Evitar que el programa termine antes de que se haya completado la petición
-            Thread.sleep(2000);
+//            Thread.sleep(2000);
         } catch (Exception e) {
             System.err.println("Error al obtener la IP pública (catch externo).");
             e.printStackTrace();
